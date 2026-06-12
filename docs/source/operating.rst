@@ -1,10 +1,10 @@
-[--solutionname--] Operating Details
+[testmytss2-3f10] Operating Details
 ====================================
 
-Generated On: --datetime-- UTC
+Generated On: 2026-06-12 00:00:59 UTC
 
 .. note::
-   **THIS DOCUMENTATION CREATION WAS AUTOMATICALLY TRIGGERED BY:** --tssgen--
+   **THIS DOCUMENTATION CREATION WAS AUTOMATICALLY TRIGGERED BY:** TSS Development Environment Container
 
    If this documentation was triggered by the TSS - then your solution is running in the TSS Development environment.  All ports and links will point to your TSS 
    development environment.
@@ -27,24 +27,24 @@ Generated On: --datetime-- UTC
 
    The ports below were valid for the last run of your solution, and will 
 
-   **not be valid if your [--solutionname--] container is NOT running**.
+   **not be valid if your [testmytss2-3f10] container is NOT running**.
 
 .. tip::
-   You must have your [--solutionname--] container running before connecting to the Visualization and Airflow URLs.
+   You must have your [testmytss2-3f10] container running before connecting to the Visualization and Airflow URLs.
 
 Github Logs
 ----------
 This is your main TSS Github logs.  All TSS processes are committed to Github and logged. 
 
 .. important::
-   --githublogs--
+   https://github.com/smaurice101/raspberrypitss/blob/main/tml-airflow/logs/logs.txt
 
 TSS Docker Run Command
 -----------------------
 This is the TML Solution Studio Docker Run command.  Note for MAC users change amd64 to arm64 in the container name. 
 
 .. note::
-   --tssdockerrun--
+   docker run -d \-\-net=host \-\-env AIRFLOWPORT=9000  -v <change to your local folder>:/dagslocalbackup:z  -v /var/run/docker.sock:/var/run/docker.sock:z  -v /your_localmachine/foldername:/rawdata:z  \-\-env GITREPOURL=https://github.com/smaurice101/raspberrypitss.git  \-\-env CHIP=amd64 \-\-env TSS=1 \-\-env SOLUTIONNAME=TSS  \-\-env EXTERNALPORT=39399  \-\-env VIPERVIZPORT=9689  \-\-env GITUSERNAME='smaurice101'  \-\-env DOCKERUSERNAME='maadsdocker'  \-\-env MQTTUSERNAME='smaurice'  \-\-env KAFKACLOUDUSERNAME=''  \-\-env KAFKACLOUDPASSWORD='<Enter your API secret>'  \-\-env READTHEDOCS='<Enter your readthedocs token>'  \-\-env GITPASSWORD='<Enter personal access token>'  \-\-env DOCKERPASSWORD='<Enter your docker hub password>'  \-\-env MQTTPASSWORD='<Enter your mqtt password>'  \-\-env UPDATE=1  maadsdocker/tml-solution-studio-with-airflow-amd64
 
 TSS Docker Run Command: Parameter Explanation
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -82,17 +82,17 @@ TSS Docker Run Command: Parameter Explanation
        If you are running MAC, use **CHIP=ARM64**
    * - \-\-env TSS=1
      - This is the TSS value and MUST be 1.
-   * - \-\-env AIRFLOWPORT=--airflowport--
+   * - \-\-env AIRFLOWPORT=9000
      - This is the airflow port for TSS.  Connect to TSS from your browser:
 
-       http://localhost:--airflowport--
+       http://localhost:9000
    * - \-\-env SOLUTIONNAME=TSS
      - This is the solution name.
-   * - \-\-env VIPERVIZPORT=--vipervizport--
+   * - \-\-env VIPERVIZPORT=9689
      - This is the port the Viperviz binary will listen on for connections.
 
        Note: If VIPERVIZPORT=-1, a random free port is selected by TSS.
-   * - \-\-env EXTERNALPORT=--externalport--
+   * - \-\-env EXTERNALPORT=39399
      - This is the external port that will be assigned to your TSS solution for external access.
 
        You will need this port in the `REST <https://tml.readthedocs.io/en/latest/tmlbuilds.html#step-3b-i-rest-api-client>`_, and `gRPC 
@@ -127,7 +127,7 @@ TSS Docker Run Command: Parameter Explanation
      - This is your API key from Confluent Cloud
    * - \-\-env KAFKACLOUDPASSWORD
      - This is your API Secret from Confluent Cloud.
-   * - --tsscontainer--
+   * - maadsdocker/tml-solution-studio-with-airflow-amd64
      - This is the TSS container name for AMD64
 
        If using MAC/Unix use: maadsdocker/tml-solution-studio-with-airflow-arm64
@@ -137,21 +137,21 @@ TSS Dashboard URL
 This is the visualization URL for your TSS dashboard. Note ports may change at runtime.  The solution documentation will update automatically.
 
 .. important::
-   --tssvisualizationurl--
+   http://localhost:9689/dashboard-rtms.html?topic=iot-preprocess,iot-preprocess2&offset=-1&groupid=&rollbackoffset=400&topictype=prediction&append=0&secure=1
 
 TSS Airflow Port
 --------------------------
 
 This is the airflow port in your TSS solution container.  
 
-It can be accessed by entering: http://localhost:--airflowport--
+It can be accessed by entering: http://localhost:9000
 
 TSS Log File Dashboard
 -----------------------
 This is the log file dashboard for your development TML solution running in TSS.
 
 .. important::
-   --tsslogfile--
+   http://localhost:9689/viperlogs.html?topic=viperlogs&append=0
 
 .. note::
    It should be noted that your solution is running in the TSS Development Environment. This gives TML developers a very good way to test their TML solutions 
@@ -164,7 +164,7 @@ Your Solution Docker Container
 --------------------------
 
 .. important::
-   --dockercontainer--
+   maadsdocker/testmytss2-3f10-amd64 (https://hub.docker.com/r/maadsdocker/testmytss2-3f10-amd64)
 
 Your Solution Docker Run Command 
 -----------------------
@@ -172,7 +172,31 @@ This is the Docker Run command for your solution container.  Note ports may chan
 
 .. code-block::
 
-   --dockerrun--
+   docker run -d -p 5050:5050 -p 4040:4040 -p 6060:6060 \
+          --env TSS=0 \
+          --env SOLUTIONNAME=testmytss2-3f10 \
+          --env SOLUTIONDAG=solution_preprocessing_dag-cybersecurity-rtms-main-3f10 \
+          --env GITUSERNAME=<Enter Github Username> \
+          --env GITPASSWORD='<Enter Github Password>' \          
+          --env GITREPOURL=<Enter Github Repo URL> \
+          --env SOLUTIONEXTERNALPORT=5050 \
+          -v /var/run/docker.sock:/var/run/docker.sock:z \
+          -v /your_localmachine/foldername:/rawdata:z \
+          --env CHIP=amd64 \
+          --env SOLUTIONAIRFLOWPORT=4040 \
+          --env SOLUTIONVIPERVIZPORT=6060 \
+          --env DOCKERUSERNAME='' \
+          --env EXTERNALPORT=39399 \
+          --env KAFKABROKERHOST=127.0.0.1:9092 \                    
+          --env KAFKACLOUDUSERNAME='<Enter API key>' \
+          --env KAFKACLOUDPASSWORD='<Enter API secret>' \          
+          --env SASLMECHANISM=PLAIN \                    
+          --env VIPERVIZPORT=9689 \
+          --env MQTTUSERNAME='' \
+          --env MQTTPASSWORD='' \          
+          --env AIRFLOWPORT=9000 \
+          --env READTHEDOCS='<Enter Readthedocs token>' \ 
+          maadsdocker/testmytss2-3f10-amd64
 
 .. tip::
    You can use DEMO credentials for testing and quickly seeing the power of TSS and TML.  
@@ -183,7 +207,7 @@ Your Solution Docker Run Command: Parameter Explanation
 ^^^^^^^^^^^^^^^^^^^^^^
 
 .. important::
-   --dockerinstructions--
+   Please ask the developer of this solution.
 
 .. list-table::
 
@@ -203,11 +227,11 @@ Your Solution Docker Run Command: Parameter Explanation
      - This is the name of the DAG that comprises your solution.
 
        This DAG is triggered automatically when you run this container.
-   * - \-\-env  SOLUTIONVIPERVIZPORT=--solutionvipervizport--
+   * - \-\-env  SOLUTIONVIPERVIZPORT=TBD
      - This is the port Viperviz is listening.  
 
        You point your browser to this port. See :ref:`Your Solution Dashboard URL`
-   * - \-\-env CLIENTPORT=--clientport--
+   * - \-\-env CLIENTPORT=Not Applicable
      - Use this port if you are externally connecting to the TML/TSS solution using
 
        REST API or gRPC clients.  You will need this port in the `REST <https://tml.readthedocs.io/en/latest/tmlbuilds.html#step-3b-i-rest-api-client>`_, and `gRPC <https://tml.readthedocs.io/en/latest/tmlbuilds.html#step-3c-i-grpc-api-client>`_ clients.
@@ -217,13 +241,13 @@ Your Solution Docker Run Command: Parameter Explanation
        for a connection as shown here: :ref:`Your Solution TML Binaries`
 
        In the TMUX window **Viper-produce**: :ref:`Your Solution TMUX Windows` 
-   * - \-\-env  VIPERVIZPORT=--vipervizport--
+   * - \-\-env  VIPERVIZPORT=9689
      - This is the port Viperviz is listening in TSS.  
 
        You point your browser to this port. See :ref:`Your Solution Dashboard URL`
-   * - \-\-env  AIRFLOWPORT=--airflowport--
+   * - \-\-env  AIRFLOWPORT=9000
      - This is the port for Airflow in TSS solution studio container.
-   * - \-\-env  SOLUTIONAIRFLOWPORT=--solutionairflowport--
+   * - \-\-env  SOLUTIONAIRFLOWPORT=TBD
      - This is the port for Airflow in TML solution container.
 
        Note: This is provided mainly for debugging and testing purposes only.
@@ -241,13 +265,13 @@ Your Solution Docker Run Command: Parameter Explanation
      - This is the readthedocs API token you created.
 
        Refer to: `Set up readthedocs <https://tml.readthedocs.io/en/latest/readthedocs.html>`_
-   * - \-\-env CHIP=--chip--
+   * - \-\-env CHIP=amd64
      - This is the chip family of your OS.
-   * - \-\-env EXTERNALPORT=--externalport--
+   * - \-\-env EXTERNALPORT=39399
      - This is the external port that you can use when making an external 
     
        connection to your TML solution running in TSS Dev environment.
-   * - \-\-env SOLUTIONEXTERNALPORT=--solutionexternalport--
+   * - \-\-env SOLUTIONEXTERNALPORT=TBD
      - This is the external port that you can use when making an external connection to your TML solution
 
        for external data ingestion.  if SOLUTIONEXTERNALPORT=-1, TSS selects a free port randomly.
@@ -259,7 +283,7 @@ Your Solution Docker Run Command: Parameter Explanation
      - This is your API key from Confluent Cloud
    * - \-\-env KAFKACLOUDPASSWORD
      - This is your API Secret from Confluent Cloud.
-   * - --justcontainer--
+   * - maadsdocker/testmytss2-3f10-amd64
      - Your solution container name. 
 
 Your Solution Airflow Port
@@ -267,10 +291,10 @@ Your Solution Airflow Port
 
 This is the airflow port in your solution container.  
 
-It can be accessed by entering: http://localhost:--solutionairflowport--
+It can be accessed by entering: http://localhost:TBD
 
 .. important::
-   --solutionairflowport--
+   TBD
 
    Note: This port will change when SOLUTIONAIRFLOWPORT=-1, you can set it to 
 
@@ -281,7 +305,7 @@ Your Solution External Port
 This is the Docker Run command for your solution container.  Note ports may change at runtime. The solution documentation will update automatically.
 
 .. important::
-   --solutionexternalport--
+   TBD
 
    This is the external port that you can use when making an external connection to your TML solution for external data ingestion.  You will need this port in the `REST <https://tml.readthedocs.io/en/latest/tmlbuilds.html#step-3b-i-rest-api-client>`_, and `gRPC <https://tml.readthedocs.io/en/latest/tmlbuilds.html#step-3c-i-grpc-api-client>`_ clients.
 
@@ -333,14 +357,14 @@ Your Solution Dashboard URL
 This is the visualization URL for your TML dashboard. Note ports may change at runtime.  The solution documentation will update automatically.
 
 .. important::
-   --visualizationurl--
+   This will appear AFTER you run Your Solution Docker Container
 
 Your Solution Log File Dashboard
 -----------------------
 This is the log file dashboard for your TML solution running.
 
 .. important::
-   --solutionlogfile--
+   This will appear AFTER you run Your Solution Docker Container
 
 Your Solution Dashboard URL: Parameter Explanation
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -349,11 +373,11 @@ Your Solution Dashboard URL: Parameter Explanation
 
    * - **Parameter**
      - **Explanation**
-   * - http://localhost:--solutionvipervizport--/<html file>
+   * - http://localhost:TBD/<html file>
      - This is the URL pointing to an html file running inside your solution container.
 
        Refer to: `TML Real-time dashboards <https://tml.readthedocs.io/en/latest/dashboards.html>`_
-   * - SOLUTIONVIPERVIZPORT=--solutionvipervizport--
+   * - SOLUTIONVIPERVIZPORT=TBD
      - This is the port `Viperviz <https://tml.readthedocs.io/en/latest/usage.html>`_ is listening on.
    * - topic
      - This is the topic that the TML binary `Viperviz <https://tml.readthedocs.io/en/latest/usage.html>`_ 
@@ -382,39 +406,39 @@ Your Solution Dashboard URL: Parameter Explanation
 
        If secure=1, data are encrypted, secure=0 no encryption.
 
-[--solutionname--] Github Repo
+[testmytss2-3f10] Github Repo
 ---------------
 This is the Github repo for all your solution code
 
 .. important::
-   --gitrepo--
+   https://github.com/smaurice101/raspberrypitss/tree/main/tml-airflow/dags/tml-solutions/testmytss2-3f10
 
 Readthedocs URL
 ---------------
 This is this URL.
 
 .. important::
-   --readthedocs--
+   https://testmytss2-3f10.readthedocs.io
 
 Solution Trigger DAG
 ----------------
 This is the name of the solution DAG you chose to trigger.
 
 .. important::
-   --triggername--
+   solution_preprocessing_dag-cybersecurity-rtms-main-3f10
 
 Your Solution TML Binaries 
 -----------------------
 These are the ports the TML binaries are listening on.
 
 .. important::
-   --tmlbinaries--
+   VIPERHOST_PRODUCE=0.0.0.0, VIPERPORT_PRODUCE=5050, VIPERHOST_PREPOCESS=127.0.1.1, VIPERPORT_PREPROCESS=38569, VIPERHOST_PREPOCESS2=127.0.1.1, VIPERPORT_PREPROCESS2=36767, VIPERHOST_PREPOCESS_PGPT=127.0.1.1, VIPERPORT_PREPROCESS_PGPT=41415, VIPERHOST_ML=127.0.1.1, VIPERPORT_ML=39857, VIPERHOST_PREDCT=127.0.1.1, VIPERPORT_PREDICT=40639, HPDEHOST=127.0.1.1, HPDEPORT=40553, HPDEHOST_PREDICT=127.0.1.1, HPDEPORT_PREDICT=40765
 
 Your Solution TMUX Windows 
 -----------------------
 
 .. important::
-   --tmuxwindows--
+   python-produce-7404-testmytss2-3f10,solution_preprocessing_dag-cybersecurity-rtms-main-3f10, python-preprocess-864-testmytss2-3f10,solution_preprocessing_dag-cybersecurity-rtms-main-3f10, python-preprocess3-2212-testmytss2-3f10,solution_preprocessing_dag-cybersecurity-rtms-main-3f10, viper-produce, viper-preprocess, viper-preprocess-pgpt, viper-preprocess-agenticai, viper-ml, viper-predict
 
 - Your solution is running in these  
 
